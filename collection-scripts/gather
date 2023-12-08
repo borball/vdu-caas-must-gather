@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# resource list
+resources=()
+
+resources+=(clusterversion node clusteroperators operators)
+
+resources+=(mc performanceprofile tuned)
+
+resources+=(network.operator.openshift.io ns/openshift-monitoring)
+
+resources+=(policies)
+
+# run the collection of resources using must-gather
+for resource in ${resources[@]}; do
+  /usr/bin/oc adm inspect --dest-dir must-gather --all-namespaces ${resource}
+done
+
+exit 0
